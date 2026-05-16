@@ -23,8 +23,7 @@ export default function Logo({ className, variant = 'brand', showText = true }: 
   return (
     <div className={cn("flex items-center gap-3 group shrink-0", className)}>
       <div className={cn(
-        "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 shadow-sm group-hover:shadow-lg",
-        variantStyles[variant],
+         <img src="/Secondary-Logo.svg" alt="FORENE Logo" className="w-8 h-8 object-contain" />,
         variant === 'brand' && "group-hover:bg-brand-lime group-hover:text-brand-onyx"
       )}>
         {/* If the user actually uploaded a logo, they can replace this with an <img> tag */}
