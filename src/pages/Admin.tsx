@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 import { useAuth } from '../components/FirebaseProvider';
+import Logo from '../components/common/Logo';
+import { Link } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '@/src/lib/firebase';
 
@@ -115,14 +117,10 @@ export default function Admin() {
     <div className="flex min-h-screen bg-brand-grey pt-0">
       {/* Sidebar */}
       <aside className="w-80 bg-brand-forest text-white p-8 flex flex-col fixed h-screen z-50">
-        <div className="flex items-center gap-3 mb-16">
-          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-            <span className="text-brand-forest font-black text-xl italic font-serif">F</span>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tighter">FORENE</h1>
-            <span className="text-[8px] uppercase tracking-widest text-white/40 block">Admin Control</span>
-          </div>
+        <div className="mb-16">
+          <Link to="/">
+            <Logo variant="light" />
+          </Link>
         </div>
 
         <nav className="flex-grow space-y-2">

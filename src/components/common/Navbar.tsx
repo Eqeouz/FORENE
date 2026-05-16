@@ -4,6 +4,7 @@ import { Menu, X, ChevronRight, LogIn, LogOut, User } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../FirebaseProvider';
+import Logo from './Logo';
 
 const navLinks = [
   { name: 'About Us', href: '/about' },
@@ -40,14 +41,8 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-brand-red flex items-center justify-center rounded-sm group-hover:bg-brand-black transition-colors">
-              <span className="text-white font-bold text-2xl font-serif">F</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold tracking-tighter text-brand-black block leading-none">FORENE</h1>
-              <p className="text-[9px] uppercase tracking-widest text-gray-500 font-medium leading-none mt-1">Food Research Network</p>
-            </div>
+          <Link to="/">
+            <Logo variant="brand" />
           </Link>
 
           {/* Desktop Nav */}
