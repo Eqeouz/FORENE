@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // --- Validation Blueprints ---
+
+    function isValidMembership(data) {
+      return data.keys().hasAll(['membershipType', 'fullName', 'phone', 'status', 'createdAt', 'country', 'school'])
+        && data.keys().size() <= 10
+        && data.membershipType in ['Student', 'Researcher', 'Professional', 'Institution']
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.phone is string && data.phone.size() <= 50
+        && data.status == 'pending'
+        && data.createdAt == request.time;
+    }
+
+    function isValidProposal(data) {
+      return data.keys().hasAll(['fullName', 'email', 'title', 'status', 'createdAt', 'researchArea', 'abstract'])
+        && data.keys().size() <= 20
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.email is string && data.email.size() <= 200
+        && data.title is string && data.title.size() <= 500
+        && data.abstract is string && data.abstract.size() <= 5000
+        && data.status == 'pending'
+        && data.createdAt == request.time;
+    }
+
+    // --- Collection Matches ---
+
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Only manageable via console or specialized tool
+    }
+
+    match /memberships/{applicationId} {
+      allow create: if isValidId(applicationId) && isValidMembership(incoming());
+      allow get: if isAdmin(); // Only admins can see individual applications
+      allow list: if isAdmin();
+      allow update: if isAdmin() && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['status'])
+      );
+    }
+
+    match /proposals/{proposalId} {
+      allow create: if isValidId(proposalId) && isValidProposal(incoming());
+      allow get: if isAdmin() || (isSignedIn() && existing().email == request.auth.token.email);
+      allow list: if isAdmin();
+      allow update: if isAdmin() && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['status'])
+      );
+    }
+
+    match /insights/{insightId} {
+      allow read: if true; // Public insights
+      allow write: if isAdmin();
+    }
+
+    match /training/{trainingId} {
+      allow read: if true; // Public listings
+      allow write: if isAdmin();
+    }
+  }
+}

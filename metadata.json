@@ -1,0 +1,8 @@
+{
+  "name": "FORENE",
+  "description": "Food Research Network - Empowering students to lead research through collaboration, training, and innovation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

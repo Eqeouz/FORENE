@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-brand-onyx: #111111;
+  --color-brand-lime: #8CE600;
+  --color-brand-forest: #264123;
+  --color-brand-white: #FFFFFF;
+  
+  /* Backward compatibility aliases */
+  --color-brand-black: var(--color-brand-onyx);
+  --color-brand-red: var(--color-brand-lime);
+  --color-brand-grey: var(--color-brand-white);
+  
+  /* Standard Tailwind colors mapped */
+  --color-background: var(--color-brand-white);
+  --color-foreground: var(--color-brand-onyx);
+  --color-primary: var(--color-brand-forest);
+  --color-accent: var(--color-brand-lime);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-grey text-brand-black font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-brand-black;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+

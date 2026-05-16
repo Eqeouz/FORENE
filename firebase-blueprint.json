@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "MembershipApplication": {
+      "title": "Membership Application",
+      "description": "Student or professional application for membership in the network.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "membershipType": { "type": "string", "enum": ["Student", "Researcher", "Professional", "Institution"] },
+        "fullName": { "type": "string" },
+        "courseOfStudy": { "type": "string" },
+        "phone": { "type": "string" },
+        "certificateUrl": { "type": "string" },
+        "country": { "type": "string" },
+        "school": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["membershipType", "fullName", "phone", "status", "createdAt"]
+    },
+    "ResearchProposal": {
+      "title": "Research Proposal",
+      "description": "Research idea submission from a student or professional.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "institution": { "type": "string" },
+        "role": { "type": "string" },
+        "researchArea": { "type": "string" },
+        "title": { "type": "string" },
+        "objectives": { "type": "string" },
+        "abstract": { "type": "string" },
+        "methodology": { "type": "string" },
+        "impact": { "type": "string" },
+        "needsCollaborators": { "type": "boolean" },
+        "skillsNeeded": { "type": "string" },
+        "resourcesNeeded": { "type": "string" },
+        "fundingRequired": { "type": "string", "enum": ["Yes", "No", "Not sure"] },
+        "proposalDocUrl": { "type": "string" },
+        "supportingDocUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "under_review", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fullName", "email", "title", "status", "createdAt"]
+    },
+    "Insight": {
+      "title": "Insight Article",
+      "description": "Research findings or perspective article.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string", "enum": ["Lab-work", "Industry Practice", "Connections"] },
+        "featuredImageUrl": { "type": "string" },
+        "body": { "type": "string" },
+        "author": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "category", "author", "status", "createdAt"]
+    },
+    "Course": {
+      "title": "Training Course",
+      "description": "Learning program for students.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string", "enum": ["training", "connections", "series"] },
+        "badge": { "type": "string", "enum": ["Free", "Paid"] },
+        "thumbnailUrl": { "type": "string" },
+        "description": { "type": "string" },
+        "instructor": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/memberships/{applicationId}": {
+      "schema": "MembershipApplication",
+      "description": "Membership applications submitted by users."
+    },
+    "/proposals/{proposalId}": {
+      "schema": "ResearchProposal",
+      "description": "Research proposals submitted for review."
+    },
+    "/insights/{insightId}": {
+      "schema": "Insight",
+      "description": "Articles and research insights."
+    },
+    "/training/{courseId}": {
+      "schema": "Course",
+      "description": "Training programs and courses."
+    }
+  }
+}
