@@ -20,7 +20,7 @@ import Admin from './pages/Admin';
 const Partner = () => (
   <div className="py-32 flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
     <h1 className="text-5xl font-black mb-6">Partner with Us</h1>
-    <p className="text-gray-500 max-w-2xl text-lg">Join our network of global partners and help us empower the next generation of food researchers.</p>
+    <p className="text-gray-500 max-w-2xl text-lg">Join our big network of global partners and help us empower the next generation of food researchers.</p>
     <button className="mt-12 bg-brand-black text-white px-10 py-4 rounded-xl font-bold hover:bg-brand-red transition-all">Download Partnership Deck</button>
   </div>
 );
